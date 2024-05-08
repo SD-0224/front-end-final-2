@@ -18,7 +18,7 @@ export default function ImagesStepper({
   const startIdx = Math.max(activeStep - 3, 0);
   const visibleImages = images.slice(startIdx, startIdx + 4);
   return (
-    <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+    <Box sx={{ display: "flex", justifyContent: "center", mt: 2, alignItems: "center" }}>
       <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
         {theme.direction === "rtl" ? (
           <KeyboardArrowRight sx={{ fontSize: "2.5rem" }} />
@@ -26,7 +26,7 @@ export default function ImagesStepper({
           <KeyboardArrowLeft sx={{ fontSize: "2.5rem" }} />
         )}
       </Button>
-      <Box>
+      <Box sx={{ display: "flex", justifyContent: "center", maxWidth: "200px" }}>
         {visibleImages.map((elm, index) => (
           <Box
             component="img"
@@ -35,16 +35,9 @@ export default function ImagesStepper({
             src={elm.imgPath}
             alt={elm.label}
             sx={{
-              [theme.breakpoints.down("sm")]: {
-                width: "30px",
-                height: "30px",
-                margin: "3px",
-              },
-              [theme.breakpoints.up("sm")]: {
-                width: "55px",
-                height: "55px",
-                margin: "5px",
-              },
+              width: "55px",
+              height: "55px",
+              margin: "5px",
               borderRadius: "8px",
               cursor: "pointer",
               opacity: activeStep === startIdx + index ? 0.5 : 1,
@@ -53,11 +46,7 @@ export default function ImagesStepper({
           />
         ))}
       </Box>
-      <Button
-        size="small"
-        onClick={handleNext}
-        disabled={activeStep === maxSteps - 1}
-      >
+      <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
         {theme.direction === "rtl" ? (
           <KeyboardArrowLeft sx={{ fontSize: "2.5rem" }} />
         ) : (

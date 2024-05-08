@@ -11,7 +11,6 @@ import { capitalizeSlug } from "../../utilities/helpers";
 import Breadcrumb from "../../components/shared/Breadcrumb/Breadcrumb";
 import TitleBanner from "../../components/shared/CateogryTitleBanner/TitleBanner";
 
-
 const Category = () => {
   const { slug } = useParams();
   const [loading, setLoading] = useState(false);
@@ -42,36 +41,50 @@ const Category = () => {
 
   return (
     <>
-      <Box sx={{ display: "flex", flexDirection: "column", gap: "3rem", margin: "7rem 0" }}>
-        <Container>
+      <Container sx={{ minHeight: "100vh" }}>
+        <Box sx={{ width: "100%", marginTop: "5rem" }}>
           <TitleBanner />
-          {loading ? (
-            <LoadingIndicator />
-          ) : (
-            <Grid container spacing={2} sx={{ marginTop: "3rem" }}>
-              <Grid item xs={2}>
+        </Box>
+        {loading ? (
+          <LoadingIndicator />
+        ) : (
+          <>
+            <Box
+              sx={{
+                mt: "3rem",
+                width: "100%",
+                display: "flex",
+                gap: "1rem",
+                flexDirection: {
+                  xs: "column",
+                  md: "row",
+                },
+              }}
+            >
+              <Box>
                 <Breadcrumb list={breadcrumbList} />
                 <h2>{capitalizeSlug(slug)}</h2>
-              </Grid>
-
-              <Grid item xs={10}>
+              </Box>
+              <Box sx={{ width: "100%" }}>
                 <ProductGrid products={productsResult.products} />
-                {
-                  productsResult.count > 0 ?
-                    <AppPagination
-                      currentPage={currentPage}
-                      onPageChange={setCurrentPage}
-                      count={productsResult.count}
-                      pageSize={pageSize}
-                    />
-                    : <Typography variant="h5" sx={{ textAlign: "center" }}>No products found</Typography>
+              </Box>
+            </Box>
 
-                }
-              </Grid>
-            </Grid>
-          )}
-        </Container>
-      </Box>
+            {productsResult.count > 0 ? (
+              <AppPagination
+                currentPage={currentPage}
+                onPageChange={setCurrentPage}
+                count={productsResult.count}
+                pageSize={pageSize}
+              />
+            ) : (
+              <Typography variant="h5" sx={{ textAlign: "center" }}>
+                No products found
+              </Typography>
+            )}
+          </>
+        )}
+      </Container>
     </>
   );
 };

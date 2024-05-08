@@ -86,6 +86,7 @@ const ImageCarousel = ({ images }) => {
               type={"p"}
               sx={{
                 fontSize: {
+                  xs: "20px",
                   sm: "24px",
                   md: "28px",
                 },

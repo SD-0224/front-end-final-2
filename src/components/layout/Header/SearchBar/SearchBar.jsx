@@ -1,18 +1,9 @@
+import React, { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import search from "../../../../assets/HedearLogo/search.svg";
-
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: "#F1F1F1",
-  marginLeft: 0,
-  width: "362px",
-  [theme.breakpoints.up("lg")]: {
-    marginLeft: theme.spacing(30),
-    width: "auto",
-  },
-}));
+import { Box } from "@mui/material";
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
@@ -30,27 +21,45 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   display: "flex",
   height: "44px",
   color: "#626262",
-  width: "365px",
   "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-  },
-  [theme.breakpoints.down("lg")]: {
-    display: "flex",
-    width: "auto",
-    fontSize: "10px",
+    paddingLeft: "3rem",
   },
 }));
 
 export default function SearchBar() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const searchLinkRef = useRef(null);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    searchLinkRef.current.click();
+  };
   return (
     <>
-      <Search>
+      <Box
+        component={"form"}
+        onSubmit={handleSearch}
+        sx={{
+          width: "100%",
+          position: "relative",
+          borderRadius: "8px",
+          backgroundColor: "#F1F1F1",
+        }}
+      >
         <SearchIconWrapper>
           <img src={search} alt="search-logo" />
         </SearchIconWrapper>
-        <StyledInputBase placeholder="Search for products or brands..." />
-      </Search>
+        <StyledInputBase
+          placeholder="Search for products or brands..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <Link
+          to={`/products/search/?search=${searchQuery}`}
+          style={{ display: "none" }}
+          ref={searchLinkRef}
+        />
+      </Box>
     </>
   );
 }

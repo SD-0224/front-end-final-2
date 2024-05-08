@@ -1,12 +1,11 @@
 import { IoMdMenu } from "react-icons/io";
 import * as React from "react";
-import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
+import { Menu, Button } from "@mui/material";
 import Fade from "@mui/material/Fade";
 import SearchBar from "../SearchBar/SearchBar";
 import { FaRegRectangleXmark } from "react-icons/fa6";
 import { Box } from "@mui/system";
+import MenuCategories from "./MenuCategories";
 
 export default function FadeMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -17,8 +16,9 @@ export default function FadeMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   return (
-    <div>
+    <>
       <Button
         id="fade-button"
         aria-controls={open ? "fade-menu" : undefined}
@@ -49,15 +49,13 @@ export default function FadeMenu() {
         >
           <FaRegRectangleXmark onClick={handleClose} />
         </Box>
-        <MenuItem>
+        <Box
+          sx={{ marginLeft: "10px", marginRight: "20px", marginTop: "20px" }}
+        >
           <SearchBar />
-        </MenuItem>
-        <MenuItem>Handbags</MenuItem>
-        <MenuItem onClick={handleClose}>Watches</MenuItem>
-        <MenuItem onClick={handleClose}>Skincare</MenuItem>
-        <MenuItem onClick={handleClose}>Jewellery</MenuItem>
-        <MenuItem onClick={handleClose}>Apparels</MenuItem>
+        </Box>
+        <MenuCategories />
       </Menu>
-    </div>
+    </>
   );
 }

@@ -1,33 +1,33 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import {
-  fetchProductsByBrandSlug, fetchHandpicked, fetchNewArrivals,
-  fetchTrendyProducts, fetchDiscountProducts, fetchLimitedProducts
+  fetchProductsByBrandSlug,
+  fetchHandpicked,
+  fetchNewArrivals,
+  fetchTrendyProducts,
+  fetchDiscountProducts,
+  fetchLimitedProducts,
 } from "../../components/products/services/ProductsService";
 import { Container, Box, Typography } from "@mui/material";
 import ProductGrid from "../../components/products/components/ProductGrid";
 import AppPagination from "../../components/shared/AppPagination/AppPagination";
 import { useParams } from "react-router-dom";
 import LoadingIndicator from "../../components/shared/LoadingIndicator/LoadingIndicator";
-import { Grid } from "@mui/material";
 import { capitalizeSlug } from "../../utilities/helpers";
 import Breadcrumb from "../../components/shared/Breadcrumb/Breadcrumb";
 import TitleBanner from "../../components/shared/CateogryTitleBanner/TitleBanner";
 
-
-import { useMatch } from 'react-router-dom';
+import { useMatch } from "react-router-dom";
 
 const ProductsList = () => {
   const { slug } = useParams();
 
-  const matchBrand = useMatch('/products/list/brand/:slug');
-  const matchNewest = useMatch('/products/list/newest');
-  const matchHandpicked = useMatch('/products/list/handpicked/:slug');
-  const matchTrendy = useMatch('/products/list/trendy');
-  const matchDiscount = useMatch('/products/list/discount');
-  const matchLimited = useMatch('/products/list/limited');
-
-
+  const matchBrand = useMatch("/products/list/brand/:slug");
+  const matchNewest = useMatch("/products/list/newest");
+  const matchHandpicked = useMatch("/products/list/handpicked/:slug");
+  const matchTrendy = useMatch("/products/list/trendy");
+  const matchDiscount = useMatch("/products/list/discount");
+  const matchLimited = useMatch("/products/list/limited");
 
   const [loading, setLoading] = useState(false);
   const [productsResult, setProductsResult] = useState([]);
@@ -35,15 +35,18 @@ const ProductsList = () => {
   const [pageSize, setPageSize] = useState(9);
   const breadcrumbList = [
     { text: "Home", link: "/" },
-    { text: (matchBrand || matchHandpicked) ? capitalizeSlug(slug) : matchTrendy ? "Trendy" : matchDiscount ? "Discount" : matchLimited ? "Limited" : "Newest" },
+    {
+      text: matchTrendy ? "Trendy" :
+        matchDiscount ? "Discount" :
+          matchLimited ? "Limited" :
+            matchBrand || matchHandpicked ? capitalizeSlug(slug) : "Newest"
+    },
   ];
-
 
 
   useEffect(() => {
     setLoading(true);
     if (matchBrand) {
-
       fetchProductsByBrandSlug(slug, currentPage, pageSize)
         .then((data) => {
           setLoading(false);
@@ -86,10 +89,7 @@ const ProductsList = () => {
         })
         .catch((error) => console.error("Failed to load limited products:", error));
     }
-
   }, [currentPage, slug, matchBrand, matchNewest, matchHandpicked, matchTrendy, matchDiscount]);
-
-
 
   return (
     <>
@@ -99,28 +99,41 @@ const ProductsList = () => {
           {loading ? (
             <LoadingIndicator />
           ) : (
-            <Grid container spacing={2} sx={{ marginTop: "3rem" }}>
-              <Grid item xs={2}>
-                <Breadcrumb list={breadcrumbList} />
-                <h2>{breadcrumbList[1].text}</h2>
+            <>
+              <Box
+                sx={{
+                  mt: "3rem",
+                  width: "100%",
+                  display: "flex",
+                  gap: "1rem",
+                  flexDirection: {
+                    xs: "column",
+                    md: "row",
+                  },
+                }}
+              >
+                <Box>
+                  <Breadcrumb list={breadcrumbList} />
+                  <h2>{capitalizeSlug(slug)}</h2>
+                </Box>
+                <Box sx={{ width: "100%" }}>
+                  <ProductGrid products={productsResult.products} />
+                </Box>
+              </Box>
 
-              </Grid>
-
-              <Grid item xs={10}>
-                <ProductGrid products={productsResult.products} />
-                {
-                  productsResult.count > 0 ?
-                    <AppPagination
-                      currentPage={currentPage}
-                      onPageChange={setCurrentPage}
-                      count={productsResult.count}
-                      pageSize={pageSize}
-                    />
-                    : <Typography variant="h5" sx={{ textAlign: "center" }}>No products found</Typography>
-
-                }
-              </Grid>
-            </Grid>
+              {productsResult.count > 0 ? (
+                <AppPagination
+                  currentPage={currentPage}
+                  onPageChange={setCurrentPage}
+                  count={productsResult.count}
+                  pageSize={pageSize}
+                />
+              ) : (
+                <Typography variant="h5" sx={{ textAlign: "center" }}>
+                  No products found
+                </Typography>
+              )}
+            </>
           )}
         </Container>
       </Box>

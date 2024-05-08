@@ -18,11 +18,7 @@ function CustomTabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ pt: 3 }}>
-          {children}
-        </Box>
-      )}
+      {value === index && <Box sx={{ pt: 3 }}>{children}</Box>}
     </div>
   );
 }
@@ -66,9 +62,9 @@ const tabStyles = {
   },
   "@media (max-width: 700px)": {
     padding: "1px 2px",
-    marginRight: "0px",
+    marginRight: "5px",
     marginLeft: "5px",
-    fontSize: "12px",
+    fontSize: "14px",
     fontWeight: "400",
   },
 };
@@ -88,8 +84,6 @@ export default function BasicTabs({ description, relatedProducts }) {
             backgroundColor: "#F1F1F1",
             borderRadius: "10px",
             "@media (max-width: 700px)": {
-              marginRight: "5px",
-              marginLeft: "5px",
               borderRadius: "10px",
             },
           }}
@@ -121,34 +115,14 @@ export default function BasicTabs({ description, relatedProducts }) {
         </CustomTabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <Typography
-          sx={{
-            whiteSpace: "pre-wrap",
-            fontSize: {
-              xs: "13px",
-              sm: "16px",
-            },
-          }}
-        >
-          {description}
-        </Typography>
+        <Typography sx={{ whiteSpace: "pre-wrap", fontSize: "1rem" }}>{description}</Typography>
       </CustomTabPanel>
 
       <CustomTabPanel value={value} index={1}>
         <RelatedProduct products={relatedProducts} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <Typography
-          sx={{
-            whiteSpace: "pre-wrap",
-            fontSize: {
-              xs: "13px", // Font size for extra small screens (less than 600px)
-              sm: "16px", // Font size for small screens (600px and up)
-            },
-          }}
-        >
-          Coming Soon ...
-        </Typography>
+        <Typography sx={{ whiteSpace: "pre-wrap", fontSize: "16px" }}>Coming Soon ...</Typography>
       </CustomTabPanel>
     </Box>
   );

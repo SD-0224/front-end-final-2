@@ -15,9 +15,15 @@ export default function MyCartButtons() {
           marginBottom: "20px",
           width: "100%",
           display: "flex",
+          gap: "1rem",
         }}
       >
-        <PrimaryButton label={"Place Order"} />
+        <PrimaryButton
+          label={"Place Order"}
+          onClick={() => {
+            navigate("/checkout");
+          }}
+        />
 
         <SecondaryButton
           label={"Continue Shopping"}

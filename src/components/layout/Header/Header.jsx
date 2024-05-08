@@ -18,23 +18,42 @@ export default function Header() {
 
   return (
     <>
-      <Container sx={{ mx: 2 }}>
+      <Container>
         <AppBar
           sx={{
             bgcolor: "white",
             margin: "0px",
-            Height: "80px",
-            boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+            boxShadow: "none",
           }}
         >
-          <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Toolbar
+            sx={{
+              display: "flex",
+              height: "80px",
+              alignItems: "center",
+              justifyContent: "space-between",
+              paddingright: { xs: "5px", md: "0px" },
+            }}
+          >
             <Link to={"/"}>
-              <Box component={"img"} sx={{ width: "108" }} src={logo} alt="home-logo" />
+              <Box component={"img"} sx={{ width: "108px", height: "40px" }} src={logo} alt="home-logo" />
             </Link>
             {isLargerScreen && (
               <>
                 <NavCategory />
-                <SearchBar />
+                <Box
+                  sx={{
+                    maxWidth: {
+                      xs: "140px",
+                      md: "290px",
+                      lg: "360px",
+                    },
+                    marginRight: "1.2rem",
+                    marginLeft: "auto",
+                  }}
+                >
+                  <SearchBar />
+                </Box>
                 <HeaderIcons />
               </>
             )}

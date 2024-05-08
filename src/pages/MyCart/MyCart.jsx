@@ -38,10 +38,31 @@ export default function MyCary({}) {
       <Typography component="h1" sx={{ color: "primary.main", fontSize: "34px", fontWeight: "600" }}>
         My Cart
       </Typography>
-      <Box sx={{ display: "flex", paddingTop: "100px", paddingBottom: "100px" }}>
-        <CartTable cart={cart} removeCartItem={removeCartItem} />
+      <Box
+        sx={{
+          display: "flex",
+          paddingTop: "100px",
+          paddingBottom: "100px",
+          justifyContent: "space-between",
+          flexDirection: {
+            xs: "column",
+            lg: "row",
+          },
+        }}
+      >
+        <Box
+          sx={{
+            flexGrow: 1,
+            paddingRight: {
+              xs: "0px",
+              lg: "100px",
+            },
+          }}
+        >
+          <CartTable cart={cart} removeCartItem={removeCartItem} />
+        </Box>
         <OrderSummary title={"Order Summary"}>
-          <Stack sx={{ display: "flex", minWidth: "321px;" }}>
+          <Stack sx={{ display: "flex" }}>
             <Invoice invoiceData={getInvoice()}></Invoice>
             <MyCartButtons />
           </Stack>

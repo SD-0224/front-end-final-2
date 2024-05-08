@@ -2,22 +2,11 @@ import { Box, Typography } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function BannerWide({
-  img,
-  text,
-  textPosition,
-  color,
-  type,
-  link,
-  children,
-}) {
+export default function BannerWide({ img, text, textPosition, color, type, link, children }) {
   return (
     <Link to={link}>
       <Box
-        width={"100%"}
-        mx="auto" // Center align the box horizontally
         display="flex"
-        alignItems="center"
         position="relative"
         sx={{
           borderRadius: "15px",
@@ -43,13 +32,12 @@ export default function BannerWide({
             transition: "opacity .2s ease-in-out",
           },
           "&:hover": {
-            // Define styles for hover effect
             "&::after": { opacity: "0.5", zIndex: "1" },
           },
-
         }}
       >
-        <img
+        <Box
+          component="img"
           src={img}
           alt={"Card 2: 15% off and more!"}
           loading="lazy"

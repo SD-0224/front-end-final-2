@@ -18,9 +18,7 @@ function SwipeableGallery({ images }) {
   };
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) =>
-      prevActiveStep === 0 ? maxSteps - 1 : prevActiveStep - 1
-    );
+    setActiveStep((prevActiveStep) => (prevActiveStep === 0 ? maxSteps - 1 : prevActiveStep - 1));
   };
 
   const handleStepChange = (step) => {
@@ -43,12 +41,7 @@ function SwipeableGallery({ images }) {
     >
       <Box
         sx={{
-          [theme.breakpoints.down("sm")]: {
-            maxWidth: "300px",
-          },
-          [theme.breakpoints.up("sm")]: {
-            maxWidth: "450px",
-          },
+          maxWidth: "100%",
           flexGrow: 1,
         }}
       >
@@ -63,14 +56,9 @@ function SwipeableGallery({ images }) {
               borderRadius: "16px",
               objectFit: "cover",
               width: "100%",
-              ...(theme.breakpoints.down("sm") && {
-                height: "300px",
-                maxWidth: "300px",
-              }),
-              ...(theme.breakpoints.up("sm") && {
-                height: "450px",
-                maxWidth: "450px",
-              }),
+              margin: "0 auto",
+              height: "450px",
+              maxWidth: "450px",
             }}
             draggable="false"
           />

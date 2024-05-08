@@ -7,27 +7,15 @@ import { useWishlistContext } from "../../../../context/WishlistContext";
 import { useCartContext } from "../../../../context/CartContext";
 import { useUserPopupContext } from "../../../../context/UserPopupContext";
 import { useAuthenticatedUserContext } from "../../../../context/AuthenticatedUserContext";
+import { Box } from "@mui/material";
 
-const HeaderIconsRaber = styled("div")(({ theme }) => ({
-  width: "114px",
+const HeaderIconsRaber = styled("div")(() => ({
   display: "flex",
-  justifyContent: "space-around",
-  alignItems: "center",
-  [theme.breakpoints.down("md")]: {
-    display: "flex",
-    padding: theme.spacing(0),
-  },
 }));
-const StyledImage = styled("img")(({ theme }) => ({
-  display: "flex",
-  width: "24px",
-  height: "24px",
-  fontSize: "small",
-  [theme.breakpoints.down("md")]: {
-    padding: theme.spacing(0),
-    width: "25px",
-    height: "15px",
-  },
+
+const StyledIconButton = styled(IconButton)(() => ({
+  padding: "5px",
+  margin: "5px",
 }));
 
 export default function HeaderIcons() {
@@ -39,15 +27,15 @@ export default function HeaderIcons() {
   return (
     <>
       <HeaderIconsRaber>
-        <IconButton onClick={toggleShowWishlist} disabled={!isAuthenticated}>
-          <StyledImage src={wishlist} alt="wishlist-logo" />
-        </IconButton>
-        <IconButton onClick={toggleUserPopup}>
-          <StyledImage src={profile} alt="profile-logo" />
-        </IconButton>
-        <IconButton onClick={toggleCart}>
-          <StyledImage src={bag} alt="bag-logo" />
-        </IconButton>
+        <StyledIconButton onClick={toggleShowWishlist} disabled={!isAuthenticated}>
+          <Box component={"img"} src={wishlist} alt="wishlist-logo" />
+        </StyledIconButton>
+        <StyledIconButton onClick={toggleUserPopup}>
+          <Box component={"img"} src={profile} alt="profile-logo" />
+        </StyledIconButton>
+        <StyledIconButton onClick={toggleCart}>
+          <Box component={"img"} src={bag} alt="bag-logo" />
+        </StyledIconButton>
       </HeaderIconsRaber>
     </>
   );

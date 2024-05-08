@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import IconButton from "@mui/material/IconButton";
 import { styled } from "@mui/material/styles";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -6,25 +6,45 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import theme from "../../../theme";
 import { useWishlistContext } from "../../../context/WishlistContext";
 import { useAuthenticatedUserContext } from "../../../context/AuthenticatedUserContext";
+import { Link } from "react-router-dom";
 
 const CustomIconButton = styled(IconButton)(() => ({
   width: "40px",
   height: "40px",
 }));
 
-export default function WishlistButton({ productId }) {
-  const { toggleWishlist, isProductInWishlist } = useWishlistContext();
+const WishlistButton = ({ productId }) => {
+  const { toggleWishlist, Wishlist } = useWishlistContext();
   const { isAuthenticated } = useAuthenticatedUserContext();
-  const active = isProductInWishlist(productId);
+
+  // Check if the product is in the wishlist
+  const isInWishlist = Wishlist.some((item) => item.productID === productId);
+  // Toggle wishlist state
+  const handleToggleWishlist = () => {
+    toggleWishlist(productId);
+  };
+
+  if (!isAuthenticated) {
+    return (
+      <Link to={"/auth/login"}>
+        <FavoriteBorderOutlinedIcon
+          sx={{ color: theme.palette.primary.main }}
+        />
+      </Link>
+    );
+  }
+
   return (
-    <CustomIconButton disabled={!isAuthenticated} onClick={()=>toggleWishlist(productId)}>
-      {active ? (
-        <FavoriteIcon sx={{ color: [theme.palette.primary.main] }} />
+    <IconButton disabled={!isAuthenticated} onClick={handleToggleWishlist}>
+      {isInWishlist ? (
+        <FavoriteIcon sx={{ color: theme.palette.primary.main }} />
       ) : (
         <FavoriteBorderOutlinedIcon
-          sx={{ color: [theme.palette.primary.main] }}
+          sx={{ color: theme.palette.primary.main }}
         />
       )}
-    </CustomIconButton>
+    </IconButton>
   );
-}
+};
+
+export default WishlistButton;

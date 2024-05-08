@@ -1,14 +1,33 @@
-import { Box, Divider, Rating, Stack, Typography } from "@mui/material";
-import React from "react";
+import { Box, Button, Divider, Rating, Stack, Typography } from "@mui/material";
+import React, { useEffect } from "react";
 import CartItemQuantity from "../CartItemQuantity/CartItemQuantity";
 import { useTheme } from "@mui/material/styles";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
 import SecondaryButton from "../SecondaryButton/SecondaryButton";
 import { useCartContext } from "../../../context/CartContext";
+import { useWishlistContext } from "../../../context/WishlistContext";
+import { useAuthenticatedUserContext } from "../../../context/AuthenticatedUserContext";
+import { Link } from "react-router-dom";
 
 export default function ProductInfo({ product }) {
-  const { productID, title, subTitle, price, discount, avgReview, reviewsCount } = product;
-  const { addCartItem, openCart, getCartItemQuantity, detectCartItem, removeCartItem } = useCartContext();
+  const {
+    productID,
+    title,
+    subTitle,
+    price,
+    discount,
+    avgReview,
+    reviewsCount,
+  } = product;
+  const {
+    addCartItem,
+    openCart,
+    getCartItemQuantity,
+    detectCartItem,
+    removeCartItem,
+  } = useCartContext();
+  const { toggleWishlist, isProductInWishlist } = useWishlistContext();
+  const { isAuthenticated } = useAuthenticatedUserContext();
 
   const theme = useTheme();
   return (
@@ -45,8 +64,18 @@ export default function ProductInfo({ product }) {
       >
         {subTitle}
       </Typography>
-      <Stack direction={"row"} alignItems="center" justifyContent="flex-start" margin={"30px 0"}>
-        <Rating name="read-only" value={avgReview} readOnly sx={{ color: "#FF8C4B", marginRight: "10px" }} />
+      <Stack
+        direction={"row"}
+        alignItems="center"
+        justifyContent="flex-start"
+        margin={"30px 0"}
+      >
+        <Rating
+          name="read-only"
+          value={avgReview}
+          readOnly
+          sx={{ color: "#FF8C4B", marginRight: "10px" }}
+        />
         <Typography
           component={"span"}
           sx={{
@@ -122,7 +151,12 @@ export default function ProductInfo({ product }) {
           marginTop: "25px",
         }}
       />
-      <Stack direction={"row"} alignItems="center" gap={2} sx={{ marginBottom: "50px" }}>
+      <Stack
+        direction={"row"}
+        alignItems="center"
+        gap={2}
+        sx={{ marginBottom: "50px" }}
+      >
         <Typography
           component={"p"}
           sx={{
@@ -133,13 +167,28 @@ export default function ProductInfo({ product }) {
           }}
         >{`Quantity:`}</Typography>
         {detectCartItem(productID) ? (
-          <CartItemQuantity itemID={productID} quantity={getCartItemQuantity(productID)} />
+          <CartItemQuantity
+            itemID={productID}
+            quantity={getCartItemQuantity(productID)}
+          />
         ) : (
           <Typography>Add to bag to set Quantity</Typography>
         )}
       </Stack>
 
-      <Box sx={{ display: "flex" }}>
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          gap: ".6rem",
+          flexDirection: {
+            xs: "column",
+            sm: "row",
+          },
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         {detectCartItem(productID) ? (
           <PrimaryButton
             label={"Remove From bag"}
@@ -158,7 +207,22 @@ export default function ProductInfo({ product }) {
             }}
           />
         )}
-        <SecondaryButton label={"Add To Wishlist"} icon={"favorite"} />
+
+        {isAuthenticated ? (
+          <SecondaryButton
+            label={
+              isProductInWishlist(productID)
+                ? "Remove From Wishlist"
+                : "Add To Wishlist"
+            }
+            icon={"favorite"}
+            onClick={()=>toggleWishlist(productID)}
+          />
+        ) : (
+          <Link to={"/auth/login"}>
+            <SecondaryButton label={"Add To Wishlist"} icon={"favorite"} />
+          </Link>
+        )}
       </Box>
     </Box>
   );

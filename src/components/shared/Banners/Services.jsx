@@ -7,22 +7,21 @@ import { Box } from "@mui/material";
 
 export default function Services() {
   return (
-    <Container fixed>
+    <Container>
       <Grid container rowSpacing={2} columnSpacing={2} my={1}>
         <Grid item xs={12}>
           <BannerWide
-            img={`/images/coral-alpha-banner 2.png`}
+            img={`/images/servicebanner1.png`}
             text={`Discount Bonanza: Enjoy 15% Off and Beyond!`}
             type="wide"
             textPosition="left"
-            color={"#9C1C00"}
+            color={"#97451f"}
             link={"/products/list/discount"}
-
           >
             <Box
               sx={{
-                bgcolor: "#FFDD9D",
-                color: "#9C1C00",
+                bgcolor: "#d4b098",
+                color: "#97451f",
                 width: "fit-content",
                 padding: "5px 10px",
                 borderRadius: "6px",
@@ -35,32 +34,32 @@ export default function Services() {
         </Grid>
         <Grid item xs={6}>
           <BannerWide
-            img={`/images/food.jpg`}
+            img={`/images/servicebanner2.png`}
             text={`limited edition products`}
             type="short"
             textPosition="right"
-            color="#1B4B66"
+            color="#a53f64"
             link={"/products/list/limited"}
           >
             <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
-                bgcolor: "rgba(23, 73, 77, 0.16)",
-                color: "#1B4B66",
+                bgcolor: "#f1f1f1",
+                color: "#a53f64",
                 width: "fit-content",
                 padding: "5px",
                 borderRadius: "50%",
                 marginTop: "20px",
               }}
             >
-              <ArrowForwardIcon />
+              <ArrowForwardIcon fontSize="large" />
             </Box>
           </BannerWide>
         </Grid>
         <Grid item xs={6}>
           <BannerWide
-            img={`/images/school.jpg`}
+            img={`/images/servicebanner3.png`}
             text={`Popular in the community!`}
             type="short"
             textPosition="right"
@@ -79,7 +78,7 @@ export default function Services() {
                 marginTop: "20px",
               }}
             >
-              <ArrowForwardIcon />
+              <ArrowForwardIcon fontSize="large" />
             </Box>
           </BannerWide>
         </Grid>

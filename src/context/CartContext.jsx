@@ -8,7 +8,9 @@ const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const { isAuthenticated, token } = useAuthenticatedUserContext();
-  const [cart, setCart] = useState(!isAuthenticated ? JSON.parse(localStorage.getItem("cart")) : []);
+  const [cart, setCart] = useState(
+    !isAuthenticated ? (localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []) : []
+  );
   const [showCart, setShowcart] = useState(false);
 
   useEffect(() => {
@@ -24,7 +26,6 @@ export const CartProvider = ({ children }) => {
         .then((data) => {
           {
             if (Array.isArray(data)) {
-              console.log("setting cart", data);
               setCart(data);
             }
           }
@@ -36,11 +37,10 @@ export const CartProvider = ({ children }) => {
           setIsLoading(false);
         });
     }
-  }, []);
+  }, [isAuthenticated]);
 
   useEffect(() => {
     if (isAuthenticated && !isLoading) {
-      console.log("posting cart", cart);
       fetch(`${environment.baseUrl}/cart/sync`, {
         method: "POST",
         headers: {
@@ -56,7 +56,6 @@ export const CartProvider = ({ children }) => {
   }, [cart]);
 
   function addCartItem(item) {
-    console.log(cart);
     if (!detectCartItem(item.productID)) {
       setCart([...cart, makeItem(item)]);
     }

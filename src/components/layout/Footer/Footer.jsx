@@ -8,31 +8,33 @@ import { useCategoriesContext } from "../../../context/CategoriesContext";
 
 export default function Footer() {
   const { categories } = useCategoriesContext();
-  const categoryMenuItems = categories.map((category) => ({
-    text: category.name,
-    path: `/category/${category.slug}`,
-  }));
+  const categoryMenuItems = Array.isArray(categories)
+    ? categories.map((category) => ({
+        text: category.name,
+        path: `/category/${category.slug}`,
+      }))
+    : [];
 
   const productsMenuItems = [
-    { text: "Featured", path: "/" },
-    { text: "Brands", path: "/" },
-    { text: "Trendy", path: "/" },
+    { text: "Featured", path: "" },
+    { text: "Brands", path: "" },
+    { text: "Trendy", path: "" },
   ];
 
   const aboutMenuItems = [
-    { text: "Contact Us", path: "/" },
+    { text: "Contact Us", path: "" },
     { text: "About Us", path: "/about" },
-    { text: "Careers", path: "/" },
-    { text: "Press", path: "/" },
+    { text: "Careers", path: "" },
+    { text: "Press", path: "" },
   ];
 
   const policyMenuItems = [
-    { text: "Return Policy", path: "/" },
-    { text: "Terms of Use", path: "/" },
-    { text: "Sitemap", path: "/" },
-    { text: "Security", path: "/" },
-    { text: "Privacy", path: "/" },
-    { text: "EPR Compliance", path: "/" },
+    { text: "Return Policy", path: "" },
+    { text: "Terms of Use", path: "" },
+    { text: "Sitemap", path: "" },
+    { text: "Security", path: "" },
+    { text: "Privacy", path: "" },
+    { text: "EPR Compliance", path: "" },
   ];
 
   // Check if the screen is small

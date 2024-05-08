@@ -4,10 +4,10 @@ import WishlistDataContainer from "../../shared/Popup/WishlistDataContainer";
 import { useWishlistContext } from "../../../context/WishlistContext";
 
 export default function Wishlist() {
-  const { Wishlist, showWishlist, closeWishlist } = useWishlistContext();
+  const { showWishlist, closeWishlist } = useWishlistContext();
   return (
     <PopUp open={showWishlist} handleClose={closeWishlist} >
-      <WishlistDataContainer WishlistData={Wishlist} />
+      <WishlistDataContainer />
     </PopUp>
   );
 }
